@@ -1,0 +1,10 @@
+
+for : utf -8 ..?
+link : https://docs.python.org/3.4/howto/unicode.html
+
+create : create read/files
+read file -> write encrypt file
+read file -> write dencrypt file
+
+Prime numbers : https://el.wikipedia.org/wiki/RSA
+

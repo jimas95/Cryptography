@@ -107,8 +107,8 @@ def Encrypt():
    # plaintext = plaintext.lower()
     numP = []
     for i in range(len(plaintext)):
-        for j in range(len(letter)):
-            if plaintext[i] == letter[j]:
+        for j in range(len(letter)): 
+            if plaintext[i] == letter[j]: #ord() -> ASCII CHAR -> int 
                 numP.append(number[j])
     h = (len(str(n)) // 2) - 1
     q = len(numP) % h
@@ -162,7 +162,7 @@ def setup():
 
 
 # setup()
-n = 2537
+n = 2537 # find bigger prime numbers 
 e = 13
 d = 937
 
