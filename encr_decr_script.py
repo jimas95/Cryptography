@@ -1,4 +1,6 @@
 import random
+import json
+import pprint
 import time
 
 
@@ -47,17 +49,26 @@ def gcd(a, b):
         (a, b) = (b, a % b)
     return a
 
-#autos o man exei auti tin antistixissi , dld to a einai 01  a miso prepei na kanw to idio kai se auton giati den exei
-# vali tous kwdikous apo to ascii
 
 letter = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q",
-          "r", "s", "t", "u", "v", "w", "x", "y", "z", ",", ".", "!", "?", " "]
+          "r", "s", "t", "u", "v", "w", "x", "y", "z", ",", ".", "!", "?", " ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
+          "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "{", "}", ":", '"', "α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κ", "λ", "μ", "ν", "ξ", "ο", "π", "ρ",
+          "σ", "τ", "η", "φ", "χ", "ψ", "ω", "ς", "Α", "Β", "Γ", "Δ", "Ε", "Ζ", "Η", "Θ", "Ι", "Κ", "Λ", "Μ", "Ν", "Ξ", "Ο", "Π", "Ρ",
+          "Σ", "Τ", "Η", "Φ", "Χ", "Ψ", "Ω"]
+
 number = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13",
           "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27",
-          "28", "29", "30", "31"]
+          "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44",
+          "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78",
+          "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103",
+          "104", "105", "106", "107", "108", "109", "110"]
 
 print('\n')
 
+print (len(letter))
+print (len(number))
+#print(', '.join(letter))
+#print(', '.join(number))
 
 def Decrypt():
     # decrypts an encoded message
@@ -66,7 +77,7 @@ def Decrypt():
     C = str(input("Enter ciphertext blocks:"))
     C = C.lstrip('[')
     C = C.rstrip(']')
-    C = C.split(',') #kanei split
+    C = C.split(',')
     for i in range(len(C)):
         x = decrypt(int(C[i]), d)
         P.append(str(x))
@@ -76,19 +87,15 @@ def Decrypt():
     p = []
     for i in range(len(C)):
         for n in range(int(h / 2)):
-            p.append((P[i][(2 * n):((2 * n) + 2)]))
-    #print int(p) theloume na kanoume to '97' se a 
+            p.append(str(P[i][(2 * n):((2 * n) + 2)]))
+
     Text = []
-    for i in range(len(p)):  
-        if(p[i]!=''):
-            temp = int(p[i]) 
-        #print p[i],i,temp , chr(temp)
-            Text.append(str(chr(temp)))
-        #for j in range(len(letter)):
-            #if str(p[i]) == number[j]:
-                #Text.append(letter[j])
+    for i in range(len(p)):
+        for j in range(len(letter)):
+            if str(p[i]) == number[j]:
+                Text.append(letter[j])
     PText = str()
-    for i in range(len(Text)-1):
+    for i in range(len(Text) -1):
         PText = PText + str(Text[i])
     print("Plaintext is:", PText)
 
@@ -97,16 +104,21 @@ def Encrypt():
     # encrypts a plaintext message using the current key
     global plaintext, numP, q, j, z, X, C
     plaintext = (input("Enter Plaintext :"))
-    plaintext = plaintext.lower()
+   # plaintext = plaintext.lower()
     numP = []
     for i in range(len(plaintext)):
-        numP.append(ord(plaintext[i]))
+        for j in range(len(letter)):
+            if plaintext[i] == letter[j]:
+                numP.append(number[j])
     h = (len(str(n)) // 2) - 1
     q = len(numP) % h
+    print (h)
+    print (q)
+    #if b > a:
     for i in range(h - q):
-        numP.append(random.randint(0, 25)) 
+        numP.append(number[random.randint(0, 25)])
     j = len(numP) / h
-    # print(numP)
+    print(numP)
     X = []
     z = 0
     for m in range(h - 1):
@@ -127,7 +139,6 @@ def setup():
     while True:
         try:
             n = int(input(" Enter a value for n :"))
-            
             if n > 2:
                 break
         except ValueError:
@@ -146,6 +157,8 @@ def setup():
                 break
         except ValueError:
             print('please enter a number')
+
+
 
 
 # setup()
@@ -195,7 +208,7 @@ while mm != 'quit':
     else:
         if mm != 'quit':
             ii = random.randint(0, 6)
-            statements = ["I sorry, Dave. I'm afraid i can't do that", "I'm begging you....read the directions",
+            statements = ["I sorry, Brother. I'm afraid i can't do that", "I'm begging you....read the directions",
                           "Nah ahh ahh, didnt say the magic word", "This input is....UNACCEPTABLE!!",
                           "Seriously....was that even a word???", "Please follow the directions",
                           "Just type 'help' if you are really that lost"]
