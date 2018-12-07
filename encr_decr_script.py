@@ -57,7 +57,7 @@ letter = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", 
           "σ", "τ", "η", "φ", "χ", "ψ", "ω", "ς", "Α", "Β", "Γ", "Δ", "Ε", "Ζ", "Η", "Θ", "Ι", "Κ", "Λ", "Μ", "Ν", "Ξ", "Ο", "Π", "Ρ",
           "Σ", "Τ", "Η", "Φ", "Χ", "Ψ", "Ω"]
 
-number = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13",
+number = ["0199", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13",
           "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27",
           "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44",
           "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78",
@@ -84,25 +84,32 @@ def Decrypt(C2):
     C = C.lstrip('[')
     C = C.rstrip(']')
     C = C.split(',')
+##    makis = []
+    PText = []
     for i in range(len(C)):
         x = decrypt(int(C[i]), d)
-        P.append(str(x))
-    correct()
-    print(P)
-    h = len(P[0])
-    p = []
-    for i in range(len(C)):
-        for n in range(int(h / 2)):
-            p.append(str(P[i][(2 * n):((2 * n) + 2)]))
-
-    Text = []
-    for i in range(len(p)):
-        for j in range(len(letter)):
-            if str(p[i]) == number[j]:
-                Text.append(letter[j])
-    PText = str()
-    for i in range(len(Text) -1):
-        PText = PText + str(Text[i])
+        PText.append(chr(x))
+##        P.append(str(x))
+##        makis.append(chr(x))
+##    print "P: " , P
+##    print "makis: " , makis
+##    correct()
+##    print "correct: ",P
+##    h = len(P[0])
+##    p = []
+##    for i in range(len(C)):
+##        for n in range(int(h / 2)):
+##            p.append(str(P[i][(2 * n):((2 * n) + 2)]))
+##    print "p mikro: ",p
+##    p = P
+##    Text = []
+##    for i in range(len(p)):
+##        for j in range(len(letter)):
+##            if str(p[i]) == number[j]:
+##                Text.append(letter[j])
+##    PText = str()
+##    for i in range(len(Text) -1):
+##        PText = PText + str(Text[i])
     print("Plaintext is:", PText)
     return PText
 
@@ -113,9 +120,10 @@ def Encrypt(plaintext):
    # plaintext = plaintext.lower()
     numP = []
     for i in range(len(plaintext)):
-        for j in range(len(letter)): 
-            if plaintext[i] == letter[j]: #ord() -> ASCII CHAR -> int 
-                numP.append(number[j])
+        numP.append(ord(plaintext[i]))
+       # for j in range(len(letter)): 
+       #     if plaintext[i] == letter[j]: #ord() -> ASCII CHAR -> int 
+       #         numP.append(number[j])
     h = (len(str(n)) // 2) - 1
     q = len(numP) % h
     for i in range(h - q):
@@ -212,7 +220,12 @@ while mm != 'quit':
             print('That is not a valid entry')
     elif mm.lower() == 'test':
         print "running test mode"
-        msg = "sakis makis takis"
+        msg = "baabbaababa"
+        temp = []
+        for i in range(len(msg)):
+            temp.append(ord(msg[i]))
+        print "oeoeoe",temp
+                        
         msg_encrypt = Encrypt(msg)
         msg_decrypt = Decrypt(str(msg_encrypt))
         print " " 
