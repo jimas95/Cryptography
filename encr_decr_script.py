@@ -3,7 +3,7 @@ import random
 import json
 import pprint
 import time
-
+import io
 
 def decrypt(F, d):
     if d == 0:
@@ -77,53 +77,32 @@ def Myinput():
 
 def Decrypt(C2):
     # decrypts an encoded message
-    C = C2
     global m,P,C, x, h, p, Text, y, w
+    C = C2
     P = []
-    #C = str(input("Enter ciphertext blocks:"))
     C = C.lstrip('[')
     C = C.rstrip(']')
     C = C.split(',')
-##    makis = []
     PText = []
+    makis = []
     for i in range(len(C)):
         x = decrypt(int(C[i]), d)
-        PText.append(chr(x))
-##        P.append(str(x))
-##        makis.append(chr(x))
-##    print "P: " , P
-##    print "makis: " , makis
-##    correct()
-##    print "correct: ",P
-##    h = len(P[0])
-##    p = []
-##    for i in range(len(C)):
-##        for n in range(int(h / 2)):
-##            p.append(str(P[i][(2 * n):((2 * n) + 2)]))
-##    print "p mikro: ",p
-##    p = P
-##    Text = []
-##    for i in range(len(p)):
-##        for j in range(len(letter)):
-##            if str(p[i]) == number[j]:
-##                Text.append(letter[j])
-##    PText = str()
-##    for i in range(len(Text) -1):
-##        PText = PText + str(Text[i])
-    print("Plaintext is:", PText)
-    return PText
+        PText.append(unichr(x))
+##        makis.append(x)
+    text = ''.join(PText)
+##    print "Makis!" , makis
+    print("Plaintext is:", text)
+    return text
 
 def Encrypt(plaintext):
     # encrypts a plaintext message using the current key
     global numP, q, j, z, X, C
-    
-   # plaintext = plaintext.lower()
+    sakis = []
     numP = []
     for i in range(len(plaintext)):
-        numP.append(ord(plaintext[i]))
-       # for j in range(len(letter)): 
-       #     if plaintext[i] == letter[j]: #ord() -> ASCII CHAR -> int 
-       #         numP.append(number[j])
+        numP.append(ord(plaintext[i])) # convert string to ASCII CODES
+##        sakis.append(ord(plaintext[i]))
+##    print "SAKIS" , sakis
     h = (len(str(n)) // 2) - 1
     q = len(numP) % h
     for i in range(h - q):
@@ -220,7 +199,7 @@ while mm != 'quit':
             print('That is not a valid entry')
     elif mm.lower() == 'test':
         print "running test mode"
-        msg = "baabbaababa"
+        msg = "baabασεφεςababa"
         temp = []
         for i in range(len(msg)):
             temp.append(ord(msg[i]))
@@ -235,7 +214,7 @@ while mm != 'quit':
         print "decrypted",msg_decrypt
     elif mm.lower() == 'test_txt':
         #read message
-        file = open("files/message.txt","r")
+        file = open("files/messageGreek.txt","rb+")
         msg = file.read()
         file.close()
 
@@ -243,23 +222,22 @@ while mm != 'quit':
         msg_encrypt_ = Encrypt(msg)
 
         #write encrypted message
-        fileE = open("files/encrypted.txt","w")
+        fileE = open("files/encrypted.txt","wb+")
         fileE.write(str(msg_encrypt_))
         fileE.close()
 
         #read endrypted message
-        file = open("files/encrypted.txt","r")
+        file = open("files/encrypted.txt","rb+")
         msg_encrypt = file.read()
-        print msg_encrypt
         file.close()
 
         #dencrypt message
         msg_decrypt = Decrypt(str(msg_encrypt))
-
+        temp = msg_decrypt.encode('utf-8')
 
         #write dencrypted message
-        fileD = open("files/decrypted.txt","w")
-        fileD.write(msg_decrypt)
+        fileD = open("files/decrypted.txt","wb+")
+        fileD.write(temp)
         fileD.close()
 
         print " " 
