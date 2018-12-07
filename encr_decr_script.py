@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import random
 import json
 import pprint
@@ -70,11 +71,16 @@ print (len(number))
 #print(', '.join(letter))
 #print(', '.join(number))
 
-def Decrypt():
+def Myinput():
+    plaintext = (input("Enter Plaintext :"))
+    return plaintext
+
+def Decrypt(C2):
     # decrypts an encoded message
-    global m, P, C, x, h, p, Text, y, w
+    C = C2
+    global m,P,C, x, h, p, Text, y, w
     P = []
-    C = str(input("Enter ciphertext blocks:"))
+    #C = str(input("Enter ciphertext blocks:"))
     C = C.lstrip('[')
     C = C.rstrip(']')
     C = C.split(',')
@@ -98,12 +104,12 @@ def Decrypt():
     for i in range(len(Text) -1):
         PText = PText + str(Text[i])
     print("Plaintext is:", PText)
+    return PText
 
-
-def Encrypt():
+def Encrypt(plaintext):
     # encrypts a plaintext message using the current key
-    global plaintext, numP, q, j, z, X, C
-    plaintext = (input("Enter Plaintext :"))
+    global numP, q, j, z, X, C
+    
    # plaintext = plaintext.lower()
     numP = []
     for i in range(len(plaintext)):
@@ -112,13 +118,9 @@ def Encrypt():
                 numP.append(number[j])
     h = (len(str(n)) // 2) - 1
     q = len(numP) % h
-    print (h)
-    print (q)
-    #if b > a:
     for i in range(h - q):
         numP.append(number[random.randint(0, 25)])
     j = len(numP) / h
-    print(numP)
     X = []
     z = 0
     for m in range(h - 1):
@@ -132,6 +134,7 @@ def Encrypt():
         C.append(r)
     print("Ciphertext:", C)
     print("Number of Ciphertext blocks:", len(C)-1)
+    return C
 
 
 def setup():
@@ -177,9 +180,11 @@ mm = str()
 while mm != 'quit':
     mm = input("Enter Command...")
     if mm.lower() == 'encrypt':
-        Encrypt()
+        msg = Myinput()
+        Encrypt(msg)
     elif mm.lower() == 'decrypt':
-        Decrypt()
+        C2 = Myinput()
+        Decrypt(C2)
     elif mm.lower() == 'n':
         try:
             print('current n = ', n)
@@ -205,6 +210,51 @@ while mm != 'quit':
             d = int(input(" Enter a value for d :"))
         except ValueError:
             print('That is not a valid entry')
+    elif mm.lower() == 'test':
+        print "running test mode"
+        msg = "sakis makis takis"
+        msg_encrypt = Encrypt(msg)
+        msg_decrypt = Decrypt(str(msg_encrypt))
+        print " " 
+        print "results"
+        print "message",msg
+        print "ecrypted",msg_encrypt
+        print "decrypted",msg_decrypt
+    elif mm.lower() == 'test_txt':
+        #read message
+        file = open("files/message.txt","r")
+        msg = file.read()
+        file.close()
+
+        #encrypt message
+        msg_encrypt_ = Encrypt(msg)
+
+        #write encrypted message
+        fileE = open("files/encrypted.txt","w")
+        fileE.write(str(msg_encrypt_))
+        fileE.close()
+
+        #read endrypted message
+        file = open("files/encrypted.txt","r")
+        msg_encrypt = file.read()
+        print msg_encrypt
+        file.close()
+
+        #dencrypt message
+        msg_decrypt = Decrypt(str(msg_encrypt))
+
+
+        #write dencrypted message
+        fileD = open("files/decrypted.txt","w")
+        fileD.write(msg_decrypt)
+        fileD.close()
+
+        print " " 
+        print "results"
+        print "message",msg
+        print "ecrypted",msg_encrypt
+        print "decrypted",msg_decrypt
+        
     else:
         if mm != 'quit':
             ii = random.randint(0, 6)
