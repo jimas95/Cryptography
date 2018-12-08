@@ -105,8 +105,8 @@ def Encrypt(plaintext):
 ##    print "SAKIS" , sakis
     h = (len(str(n)) // 2) - 1
     q = len(numP) % h
-    for i in range(h - q):
-        numP.append(number[random.randint(0, 25)])
+##    for i in range(h - q):
+##        numP.append(number[random.randint(0, 25)])
     j = len(numP) / h
     X = []
     z = 0
@@ -199,51 +199,58 @@ while mm != 'quit':
             print('That is not a valid entry')
     elif mm.lower() == 'test':
         print "running test mode"
-        msg = "baabασεφεςababa"
+        msg = "baabασεφεςababa" #### ####
+        file = io.open("files/messageGreek.txt","r",encoding="utf-8")
+        msg = file.read()
+        file.close()
         temp = []
         for i in range(len(msg)):
             temp.append(ord(msg[i]))
         print "oeoeoe",temp
                         
-        msg_encrypt = Encrypt(msg)
+        msg_encrypt = Encrypt(msg[1:]) #### ####
+        print "oeoeoe \n",msg
         msg_decrypt = Decrypt(str(msg_encrypt))
         print " " 
         print "results"
         print "message",msg
         print "ecrypted",msg_encrypt
-        print "decrypted",msg_decrypt
+        print "decrypted",msg_decrypt.encode('utf-8')
+        
     elif mm.lower() == 'test_txt':
         #read message
-        file = open("files/messageGreek.txt","rb+")
+##        file = io.open("files/message.txt","r",encoding="utf-8")
+        file = io.open("files/messageGreek.txt","r",encoding="utf-8")
         msg = file.read()
         file.close()
 
         #encrypt message
         msg_encrypt_ = Encrypt(msg)
-
+##        msg_encrypt_ = msg_encrypt_[1:] #### ####
         #write encrypted message
-        fileE = open("files/encrypted.txt","wb+")
+        fileE = open("files/encrypted.txt","w")
         fileE.write(str(msg_encrypt_))
         fileE.close()
 
         #read endrypted message
-        file = open("files/encrypted.txt","rb+")
+        file = io.open("files/encrypted.txt","r",encoding="utf-8")
         msg_encrypt = file.read()
         file.close()
 
         #dencrypt message
+        msg_encrypt=msg_encrypt.decode('utf-8')
         msg_decrypt = Decrypt(str(msg_encrypt))
         temp = msg_decrypt.encode('utf-8')
 
         #write dencrypted message
-        fileD = open("files/decrypted.txt","wb+")
+        fileD = open("files/decrypted.txt","w")
         fileD.write(temp)
         fileD.close()
 
-        print " " 
-        print "results"
-        print "message",msg
-        print "ecrypted",msg_encrypt
+         
+        print "\nRESULTS"
+        print "message\n",msg
+        print "ecrypted\n",msg_encrypt
         print "decrypted",msg_decrypt
         
     else:

@@ -2,7 +2,7 @@
 for : utf -8 ..?
 link : https://docs.python.org/3.4/howto/unicode.html
 
-create : create read/files
+create : create read/files DONE
 read file -> write encrypt file
 read file -> write dencrypt file
 
